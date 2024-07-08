@@ -2,25 +2,34 @@
     <form class="card-body" method="post" action="#">
         {% csrf_token %}
         <h6 class="card-title mb-4">Add Education Detail</h6>
-        <div class="mb-3">
-            <label class="form-label">Job Title</label>
-            <input type="text" name="old_password" class="form-control">
+        <div class="row"></div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Course</label>
+            <input type="text" name="course" class="form-control">
         </div>
-        <div class="mb-3">
-            <label class="form-label">Company Name</label>
-            <input type="text" name="new_password" class="form-control">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Class/Standard</label>
+            <input type="text" name="class_standard" class="form-control">
         </div>
-        <div class="mb-3">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Board/Universicy</label>
+            <input type="text" name="board_university" class="form-control">
+        </div>
+        <div class="col-md-6 mb-3">
             <label class="form-label">Start Date</label>
-            <input type="text" name="start_date" class="form-control">
+            <input type="text" name="start_date" class="form-control date_input">
         </div>
-        <div class="mb-3">
+        <div class="col-md-6 mb-3">
             <label class="form-label">End Date</label>
-            <input type="text" name="end_date" class="form-control">
+            <input type="text" name="end_date" class="form-control date_input">
         </div>
-        <div class="mb-3">
-            <label class="form-label">Continue?</label>
-            <input type="checkbox" name="is_continue" class="form-control">
+        <div class="row">
+        <div class="form-check mb-3">
+            <input class="form-check-input" name="is_continue" type="checkbox" value="" id="defaultFlexCheckDefault">
+            <label class="form-check-label" for="defaultFlexCheckDefault">
+                Continue?
+            </label>
+          </div>
         </div>
         <div class="">
             <button type="submit" class="btn btn-success btn-icon">

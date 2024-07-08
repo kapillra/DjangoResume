@@ -91,6 +91,24 @@ def profile_update(request):
 
     return redirect(profile_page)
 
+# add education
+def add_education(request):
+    master = Master.objects.get(Email=request.session['email'])
+    user = UserProfile.objects.get(Master = master)
+    
+    Education.objects.create(
+        UserProfile = user,
+        Course = request.POST['course'],
+        Standard = request.POST['class_standard'],
+        BoardUniversity = request.POST['board_university'],
+        StartDate = request.POST['start_date'],
+        EndDate = request.POST['end_date'],
+        IsContinue = True if 'is_continue' in request.POST else False
+    )
+
+    return redirect(profile_page)
+
+
 # change passsword
 
 def change_password(request):
