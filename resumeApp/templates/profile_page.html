@@ -649,13 +649,13 @@
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="education-tab" data-bs-toggle="tab" href="#education" role="tab"
+                            <a class="nav-link" id="education-tab" data-bs-toggle="tab" href="#education" role="tab"
                                aria-controls="education" aria-selected="true">
                                 <i class="bi bi-bookshelf me-2"></i> Education
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="experience-tab" data-bs-toggle="tab" href="#experience" role="tab"
+                            <a class="nav-link active" id="experience-tab" data-bs-toggle="tab" href="#experience" role="tab"
                                aria-controls="experience" aria-selected="true">
                                 <i class="bi bi-file-person me-2"></i> Experience
                             </a>
@@ -670,60 +670,61 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <form method="post" action="{% url 'profile_update' %}">
                         {% csrf_token %}
-                    <div class="mb-4">
-                        <div class="d-flex flex-column flex-md-row text-center text-md-start mb-3">
-                            <figure class="me-4 flex-shrink-0">
-                                <img width="100" class="rounded-pill"
-                                     src="../../assets/images/user/man_avatar3.jpg" alt="...">
-                            </figure>
-                            <div class="flex-fill">
-                                <h5 class="mb-3">{% if user_data.FullName %}{{user_data.FullName}}{% else %}Guest{% endif %}</h5>
-                                <button class="btn btn-primary me-2">Change Avatar</button>
-                                <button class="btn btn-outline-danger btn-icon" data-bs-toggle="tooltip" title="Remove Avatar">
-                                    <i class="bi bi-trash me-0"></i>
-                                </button>
-                                <p class="small text-muted mt-3">For best results, use an image at least
-                                    256px by 256px in either .jpg or .png format</p>
+                        <div class="mb-4">
+                            <div class="d-flex flex-column flex-md-row text-center text-md-start mb-3">
+                                <figure class="me-4 flex-shrink-0">
+                                    <img width="100" class="rounded-pill"
+                                        src="../../assets/images/user/man_avatar3.jpg" alt="...">
+                                </figure>
+                                <div class="flex-fill">
+                                    <h5 class="mb-3">{% if user_data.FullName %}{{user_data.FullName}}{% else %}Guest{% endif %}</h5>
+                                    <button class="btn btn-primary me-2">Change Avatar</button>
+                                    <button class="btn btn-outline-danger btn-icon" data-bs-toggle="tooltip" title="Remove Avatar">
+                                        <i class="bi bi-trash me-0"></i>
+                                    </button>
+                                    <p class="small text-muted mt-3">For best results, use an image at least
+                                        256px by 256px in either .jpg or .png format</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h6 class="card-title mb-4">Basic Information</h6>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Name</label>
-                                            <input type="text" name="full_name" class="form-control" placeholder="Full Name" value="{{user_data.FullName}}">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-title mb-4">Basic Information</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Name</label>
+                                                <input type="text" name="full_name" class="form-control" placeholder="Full Name" value="{{user_data.FullName}}">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Date of Birth</label>
+                                                <input type="text" name="birth_date" class="form-control date_input">
+                                            </div>
                                         </div>
-                                        
-                                        <div class="mb-3">
-                                            <label class="form-label">Date of Birth</label>
-                                            <input type="text" name="birth_date" class="form-control date_input">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Username</label>
-                                            <input type="text" name="username" class="form-control" placeholder="Username" value="{{user_data.Username}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Gender</label>
-                                            <div class="form-control">
-                                                <div class="form-check form-check-inline">
-                                                    <input type="radio" id="inlineRadio1" name="gender"
-                                                           class="form-check-input" value="m" {% if user_data.Gender == "m" %}checked{% endif %}>
-                                                    <label class="form-check-label" for="inlineRadio1">Male</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input type="radio" id="inlineRadio2" name="gender"
-                                                           class="form-check-input" value="f" {% if user_data.Gender == "f" %}checked{% endif %}>
-                                                    <label class="form-check-label"
-                                                           for="inlineRadio2">Female</label>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Username</label>
+                                                <input type="text" name="username" class="form-control" placeholder="Username" value="{{user_data.Username}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Gender</label>
+                                                <div class="form-control">
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" id="inlineRadio1" name="gender"
+                                                            class="form-check-input" value="m" {% if user_data.Gender == "m" %}checked{% endif %}>
+                                                        <label class="form-check-label" for="inlineRadio1">Male</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" id="inlineRadio2" name="gender"
+                                                            class="form-check-input" value="f" {% if user_data.Gender == "f" %}checked{% endif %}>
+                                                        <label class="form-check-label"
+                                                            for="inlineRadio2">Female</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -731,65 +732,67 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h6 class="card-title mb-4">Contact</h6>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Mobile</label>
-                                        <input type="text" name="mobile" class="form-control" placeholder="Mobile" value="{{user_data.Mobile}}">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h6 class="card-title mb-4">Contact</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Mobile</label>
+                                            <input type="text" name="mobile" class="form-control" placeholder="Mobile" value="{{user_data.Mobile}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Pincode</label>
+                                            <input type="text" name="pincode" class="form-control" placeholder="pincode" value="{{user_data.Pincode}}">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Pincode</label>
-                                        <input type="text" name="pincode" class="form-control" placeholder="pincode" value="{{user_data.Pincode}}">
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label class="form-label">City</label>
-                                        <input type="text" name="city" class="form-control" placeholder="City" value="{{user_data.City}}">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">City</label>
+                                            <input type="text" name="city" class="form-control" placeholder="City" value="{{user_data.City}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">State</label>
+                                            <input type="text" name="state" class="form-control" placeholder="State" value="{{user_data.State}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Country</label>
+                                            <input type="text" name="country" class="form-control" placeholder="Country" value="{{user_data.Country}}">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label class="form-label">State</label>
-                                        <input type="text" name="state" class="form-control" placeholder="State" value="{{user_data.State}}">
+                                        <label class="form-label">Address</label>
+                                        <textarea name="address" class="form-control" placeholder="Address">{{user_data.Address}}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label class="form-label">Country</label>
-                                        <input type="text" name="country" class="form-control" placeholder="Country" value="{{user_data.Country}}">
-                                    </div>
+                                <div class="">
+                                    <button type="submit" class="btn btn-success btn-icon">
+                                        <i class="bi bi-check-circle"></i> Save
+                                    </button>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Address</label>
-                                    <textarea name="address" class="form-control" placeholder="Address">{{user_data.Address}}</textarea>
-                                </div>
-                            </div>
-                            <div class="">
-                                <button type="submit" class="btn btn-success btn-icon">
-                                    <i class="bi bi-check-circle"></i> Save
-                                </button>
                             </div>
                         </div>
-                    </div>
                     </form>
                 </div>
                 <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
                     {% include "password-change.html" %}
                 </div>
-                <div class="tab-pane fade show active" id="education" role="tabpanel" aria-labelledby="education-tab">
+                <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
                     {% include "education.html" %}
+                </div>
+                <div class="tab-pane fade show active" id="experience" role="tabpanel" aria-labelledby="experience-tab">
+                    {% include "experience.html" %}
                 </div>
                 <div class="tab-pane fade d-none" id="notification-settings" role="tabpanel"
                      aria-labelledby="notification-settings-tab">
@@ -907,18 +910,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card sticky-top mb-4 mb-md-0">
-                <h4 class="card-header">Education List</h4>
-                <div class="card-body">
-                    <h5 class="card-title">course</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">2016-2019</h6>
-                    <p class="card-text">University</p>
-                    <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
     </div>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from random import randint
+from datetime import date
 
 default_data = {
     'site_name': 'ResumeBuilder',
@@ -8,6 +9,9 @@ default_data = {
 }
 
 def login_page(request):
+    if 'email' in request.session:
+        return redirect(profile_page)
+    
     default_data['current_page'] = 'login_page'
     return render(request, "login_page.html", default_data)
 
@@ -54,8 +58,14 @@ def register(request):
 def load_user_data(request):
     master = Master.objects.get(Email = request.session['email'])
     user = UserProfile.objects.get(Master = master)
+    education = Education.objects.filter(UserProfile=user)
+    experience = Experience.objects.filter(UserProfile=user)
 
     default_data['user_data'] = user
+    default_data['education'] = education
+    default_data['experience'] = experience
+
+    print(default_data['education'])
 
 # login functionality
 def login(request):
@@ -108,9 +118,68 @@ def add_education(request):
 
     return redirect(profile_page)
 
+# edit education
+def edit_education(request, id):
+    edit_edu_data = Education.objects.get(id=id)
+    if request.method == "GET":
+        edit_edu_data.StartDate = edit_edu_data.StartDate.strftime("%Y-%m-%d")
+        edit_edu_data.EndDate = edit_edu_data.EndDate.strftime("%Y-%m-%d")
+        # print(edit_edu_data.StartDate.strftime("%Y-%m-%d"))
+        default_data['edit_edu_data'] = edit_edu_data
+    elif request.method == "POST":
+        edit_edu_data.Course = request.POST['course'],
+        edit_edu_data.Standard = request.POST['class_standard'],
+        edit_edu_data.BoardUniversity = request.POST['board_university'],
+        
+        sd = request.POST['start_date'].split('-')
+        start_date = date(int(sd[0]), int(sd[1]), int(sd[2]))
+        edit_edu_data.StartDate = start_date,
+        
+        ed = request.POST['end_date'].split('-')
+        end_date = date(int(ed[0]), int(ed[1]), int(ed[2]))
+        edit_edu_data.EndDate = end_date,
+        edit_edu_data.IsContinue = True if 'is_continue' in request.POST else False
+        print(start_date, end_date)
+        print(edit_edu_data)
+
+        edit_edu_data.save()
+
+        del default_data['edit_edu_data']
+
+    return redirect(profile_page)
+
+# delete education
+def delete_education(request, id):
+    Education.objects.get(id=id).delete()
+
+    return redirect(profile_page)
+
+
+# add experience
+def add_experience(request):
+    master = Master.objects.get(Email=request.session['email'])
+    user = UserProfile.objects.get(Master = master)
+    
+    Experience.objects.create(
+        UserProfile = user,
+        JobTitle = request.POST['job_title'],
+        Company = request.POST['company'],
+        StartDate = request.POST['start_date'],
+        EndDate = request.POST['end_date'],
+        IsContinue = True if 'is_continue' in request.POST else False
+    )
+
+    return redirect(profile_page)
+
+# edit experience
+def edit_experience(request, id):
+    pass
+
+# delete experience
+def delete_experience(request, id):
+    pass
 
 # change passsword
-
 def change_password(request):
     master = Master.objects.get(Email = request.session['email'])
 

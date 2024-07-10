@@ -1,21 +1,17 @@
 <div class="row">
     <div class="col-md-8">
         <div class="card">
-            <form class="card-body" method="post" action="{% if edit_edu_data %}/edit_education/{{edit_edu_data.id}}/{% else %}/add_education/{% endif %}">
+            <form class="card-body" method="post" action="{% if edit_exp_data %}/edit_experience/{{edit_exp_data.id}}/{% else %}/add_experience/{% endif %}">
                 {% csrf_token %}
-                <h6 class="card-title mb-4">Add Education Detail</h6>
+                <h6 class="card-title mb-4">Add Experience Detail</h6>
                 <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Course</label>
-                        <input type="text" name="course" class="form-control" value="{{edit_edu_data.Course}}">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Job Title</label>
+                        <input type="text" name="job_title" class="form-control" value="{{edit_edu_data.Course}}">
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Class/Standard</label>
-                        <input type="text" name="class_standard" class="form-control" value="{{edit_edu_data.Standard}}">
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Board/Universicy</label>
-                        <input type="text" name="board_university" class="form-control" value="{{edit_edu_data.BoardUniversity}}">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Company</label>
+                        <input type="text" name="company" class="form-control" value="{{edit_edu_data.Standard}}">
                     </div>
                 </div>
                 <div class="row">
@@ -46,14 +42,14 @@
     </div>
     <div class="col-md-4">
         <div class="card sticky-top mb-4 mb-md-0">
-            <h4 class="card-header">Education List</h4>
-            {% for edu in education %}
+            <h4 class="card-header">Experience List</h4>
+            {% for exp in experience %}
             <div class="card-body">
-                <h5 class="card-title">{{edu.Course}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{edu.StartDate}} - {% if edu.IsContinue %}Present{% else %}{{edu.EndDate}}{% endif %}</h6>
-                <p class="card-text">{{edu.BoardUniversity}}</p>
-                <a href="{% url 'edit_education' id=edu.id %}" class="btn btn-sm btn-primary">Edit</a>
-                <a href="{% url 'delete_education' id=edu.id %}" class="btn btn-sm btn-danger">Delete</a>
+                <h5 class="card-title text-uppercase">{{exp.JobTitle}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{exp.StartDate}} - {% if exp.IsContinue %}Present{% else %}{{exp.EndDate}}{% endif %}</h6>
+                <p class="card-text">{{exp.Company}}</p>
+                <a href="{% url 'edit_experience' id=exp.id %}" class="btn btn-sm btn-primary">Edit</a>
+                <a href="{% url 'delete_experience' id=exp.id %}" class="btn btn-sm btn-danger">Delete</a>
             </div>
             {% endfor %}
         </div>

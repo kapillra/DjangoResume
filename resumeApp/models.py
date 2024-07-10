@@ -60,9 +60,6 @@ class Education(models.Model):
     class Meta:
         db_table = 'education'
 
-    def __str__(self) -> str:
-        return self.BoardUniversity
-
 class Project(models.Model):
     UserProfile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     ProjectName = models.CharField(max_length=255)
