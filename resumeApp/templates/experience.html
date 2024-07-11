@@ -1,38 +1,43 @@
 <div class="row">
     <div class="col-md-8">
         <div class="card">
-            <form class="card-body" method="post" action="{% if edit_exp_data %}/edit_experience/{{edit_exp_data.id}}/{% else %}/add_experience/{% endif %}">
+            <form class="card-body" method="post" action="{% if edit_exp_data %}/edit_experience_save/{{edit_exp_data.id}}/{% else %}/add_experience/{% endif %}">
                 {% csrf_token %}
                 <h6 class="card-title mb-4">Add Experience Detail</h6>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Job Title</label>
-                        <input type="text" name="job_title" class="form-control" value="{{edit_edu_data.Course}}">
+                        <input type="text" name="job_title" class="form-control" value="{{edit_exp_data.JobTitle}}">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Company</label>
-                        <input type="text" name="company" class="form-control" value="{{edit_edu_data.Standard}}">
+                        <input type="text" name="company" class="form-control" value="{{edit_exp_data.Company}}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Start Date</label>
-                        <input type="text" name="start_date" class="form-control date_input" value="{{edit_edu_data.StartDate}}">
+                        <input type="text" name="start_date" class="form-control date_input" value="{{edit_exp_data.StartDate}}">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">End Date</label>
-                        <input type="text" name="end_date" class="form-control date_input" value="{{edit_edu_data.EndDate}}">
+                        <input type="text" name="end_date" class="form-control date_input" value="{{edit_exp_data.EndDate}}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-check mb-3">
-                        <input class="form-check-input" name="is_continue" {% if edit_edu_data.IsContinue %}checked{% endif %} type="checkbox" value="" id="defaultFlexCheckDefault">
+                        <input class="form-check-input" name="is_continue" {% if edit_exp_data.IsContinue %}checked{% endif %} type="checkbox" value="" id="defaultFlexCheckDefault">
                         <label class="form-check-label" for="defaultFlexCheckDefault">
                             Continue?
                         </label>
                     </div>
                 </div>
                 <div class="">
+                    {% if edit_exp_data %}
+                    <a href="{% url 'edit_exp_cancel' %}" class="btn btn-success btn-icon">
+                        <i class="bi bi-delete-circle"></i> Cancel
+                    </a>
+                    {% endif %}
                     <button type="submit" class="btn btn-success btn-icon">
                         <i class="bi bi-check-circle"></i> Save
                     </button>

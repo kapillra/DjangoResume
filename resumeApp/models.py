@@ -63,6 +63,7 @@ class Education(models.Model):
 class Project(models.Model):
     UserProfile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     ProjectName = models.CharField(max_length=255)
+    Company = models.CharField(max_length=100)
     StartDate = models.DateField()
     EndDate = models.DateField()
     IsContinue = models.BooleanField(default=False)

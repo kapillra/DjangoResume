@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <form class="card-body" method="post" action="{% if edit_proj_data %}/edit_project_save/{{edit_proj_data.id}}/{% else %}/add_project/{% endif %}">
+                {% csrf_token %}
+                <h6 class="card-title mb-4">Add Project Detail</h6>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Project Name</label>
+                        <input type="text" name="project_name" class="form-control" value="{{edit_proj_data.ProjectName}}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Company</label>
+                        <select class="form-select" name="company" aria-label="Default select example">
+                            <option selected>select company</option>
+                            <option value="self">Self</option>
+                            {% for exp in experience %}
+                            <option value="{{exp.Company}}">{{exp.Company}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Start Date</label>
+                        <input type="text" name="start_date" class="form-control date_input" value="{{edit_proj_data.StartDate}}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">End Date</label>
+                        <input type="text" name="end_date" class="form-control date_input" value="{{edit_proj_data.EndDate}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" name="is_continue" {% if edit_proj_data.IsContinue %}checked{% endif %} type="checkbox" value="" id="defaultFlexCheckDefault">
+                        <label class="form-check-label" for="defaultFlexCheckDefault">
+                            Continue?
+                        </label>
+                    </div>
+                </div>
+                <div class="">
+                    {% if edit_proj_data %}
+                    <a href="{% url 'edit_proj_cancel' %}" class="btn btn-success btn-icon">
+                        <i class="bi bi-delete-circle"></i> Cancel
+                    </a>
+                    {% endif %}
+                    <button type="submit" class="btn btn-success btn-icon">
+                        <i class="bi bi-check-circle"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card sticky-top mb-4 mb-md-0">
+            <h4 class="card-header">Project List</h4>
+            {% for proj in projects %}
+            <div class="card-body">
+                <h5 class="card-title text-uppercase">{{proj.ProjectName}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{proj.StartDate}} - {% if proj.IsContinue %}Present{% else %}{{proj.EndDate}}{% endif %}</h6>
+                <p class="card-text">{{proj.Company}}</p>
+                <a href="{% url 'edit_project' id=proj.id %}" class="btn btn-sm btn-primary">Edit</a>
+                <a href="{% url 'delete_project' id=proj.id %}" class="btn btn-sm btn-danger">Delete</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

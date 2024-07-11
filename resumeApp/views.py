@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from random import randint
-from datetime import date
+from datetime import date, datetime
 
 default_data = {
     'site_name': 'ResumeBuilder',
@@ -60,10 +60,12 @@ def load_user_data(request):
     user = UserProfile.objects.get(Master = master)
     education = Education.objects.filter(UserProfile=user)
     experience = Experience.objects.filter(UserProfile=user)
+    projects = Project.objects.filter(UserProfile=user)
 
     default_data['user_data'] = user
     default_data['education'] = education
     default_data['experience'] = experience
+    default_data['projects'] = projects
 
     print(default_data['education'])
 
@@ -121,29 +123,36 @@ def add_education(request):
 # edit education
 def edit_education(request, id):
     edit_edu_data = Education.objects.get(id=id)
-    if request.method == "GET":
-        edit_edu_data.StartDate = edit_edu_data.StartDate.strftime("%Y-%m-%d")
-        edit_edu_data.EndDate = edit_edu_data.EndDate.strftime("%Y-%m-%d")
-        # print(edit_edu_data.StartDate.strftime("%Y-%m-%d"))
-        default_data['edit_edu_data'] = edit_edu_data
-    elif request.method == "POST":
-        edit_edu_data.Course = request.POST['course'],
-        edit_edu_data.Standard = request.POST['class_standard'],
-        edit_edu_data.BoardUniversity = request.POST['board_university'],
-        
-        sd = request.POST['start_date'].split('-')
-        start_date = date(int(sd[0]), int(sd[1]), int(sd[2]))
-        edit_edu_data.StartDate = start_date,
-        
-        ed = request.POST['end_date'].split('-')
-        end_date = date(int(ed[0]), int(ed[1]), int(ed[2]))
-        edit_edu_data.EndDate = end_date,
-        edit_edu_data.IsContinue = True if 'is_continue' in request.POST else False
-        print(start_date, end_date)
-        print(edit_edu_data)
 
-        edit_edu_data.save()
+    edit_edu_data.StartDate = edit_edu_data.StartDate.strftime("%Y-%m-%d")
+    edit_edu_data.EndDate = edit_edu_data.EndDate.strftime("%Y-%m-%d")
+    default_data['edit_edu_data'] = edit_edu_data
 
+    return redirect(profile_page)
+
+# edit cancel
+def edit_edu_cancel(request):
+    if 'edit_edu_data' in default_data:
+        del default_data['edit_edu_data']
+
+    return redirect(profile_page)
+
+# edit education save
+def edit_education_save(request, id):
+    education = Education.objects.get(id=id)
+    education.Course = request.POST['course']
+    education.Standard = request.POST['class_standard']
+    education.BoardUniversity = request.POST['board_university']
+
+    education.StartDate = request.POST['start_date']
+
+    education.EndDate = request.POST['end_date']
+    education.IsContinue = True if 'is_continue' in request.POST else False
+
+    print(education)
+    education.save()
+
+    if 'edit_edu_data' in default_data:
         del default_data['edit_edu_data']
 
     return redirect(profile_page)
@@ -153,7 +162,6 @@ def delete_education(request, id):
     Education.objects.get(id=id).delete()
 
     return redirect(profile_page)
-
 
 # add experience
 def add_experience(request):
@@ -173,11 +181,97 @@ def add_experience(request):
 
 # edit experience
 def edit_experience(request, id):
-    pass
+    edit_exp_data = Experience.objects.get(id=id)
+    edit_exp_data.StartDate = edit_exp_data.StartDate.strftime("%Y-%m-%d")
+    edit_exp_data.EndDate = edit_exp_data.EndDate.strftime("%Y-%m-%d")
+    default_data['edit_exp_data'] = edit_exp_data
+
+    return redirect(profile_page)
+
+# edit cancel
+def edit_exp_cancel(request):
+    if 'edit_exp_data' in default_data:
+        del default_data['edit_exp_data']
+
+    return redirect(profile_page)
+
+# edit experience save
+def edit_experience_save(request, id):
+    experience = Experience.objects.get(id=id)
+    experience.JobTitle = request.POST['job_title']
+    experience.Company = request.POST['company']
+
+    experience.StartDate = request.POST['start_date']
+    experience.EndDate = request.POST['end_date']
+    experience.IsContinue = True if 'is_continue' in request.POST else False
+
+    print(experience)
+    experience.save()
+
+    if 'edit_exp_data' in default_data:
+        del default_data['edit_exp_data']
+
+    return redirect(profile_page)
 
 # delete experience
 def delete_experience(request, id):
-    pass
+    Experience.objects.get(id=id).delete()
+    return redirect(profile_page)
+
+# add experience
+def add_project(request):
+    master = Master.objects.get(Email=request.session['email'])
+    user = UserProfile.objects.get(Master = master)
+    
+    Project.objects.create(
+        UserProfile = user,
+        ProjectName = request.POST['project_name'],
+        Company = request.POST['company'],
+        StartDate = request.POST['start_date'],
+        EndDate = request.POST['end_date'],
+        IsContinue = True if 'is_continue' in request.POST else False
+    )
+
+    return redirect(profile_page)
+
+# edit experience
+def edit_project(request, id):
+    project = Project.objects.get(id=id)
+    project.StartDate = project.StartDate.strftime("%Y-%m-%d")
+    project.EndDate = project.EndDate.strftime("%Y-%m-%d")
+    default_data['edit_proj_data'] = project
+
+    return redirect(profile_page)
+
+# edit cancel
+def edit_proj_cancel(request):
+    if 'edit_proj_data' in default_data:
+        del default_data['edit_proj_data']
+
+    return redirect(profile_page)
+
+# edit project save
+def edit_project_save(request, id):
+    project = Project.objects.get(id=id)
+    project.ProjectName = request.POST['project_name']
+    project.Company = request.POST['company']
+
+    project.StartDate = request.POST['start_date']
+    project.EndDate = request.POST['end_date']
+    project.IsContinue = True if 'is_continue' in request.POST else False
+
+    print(project)
+    project.save()
+
+    if 'edit_proj_data' in default_data:
+        del default_data['edit_proj_data']
+
+    return redirect(profile_page)
+
+# delete project
+def delete_project(request, id):
+    Project.objects.get(id=id).delete()
+    return redirect(profile_page)
 
 # change passsword
 def change_password(request):
