@@ -5,7 +5,8 @@ from datetime import date, datetime
 
 default_data = {
     'site_name': 'ResumeBuilder',
-    'auth_pages': ['login_page', 'register_page', 'reset_password_page']
+    'auth_pages': ['login_page', 'register_page', 'reset_password_page'],
+    'skill_level': skill_level,
 }
 
 def login_page(request):
@@ -61,11 +62,13 @@ def load_user_data(request):
     education = Education.objects.filter(UserProfile=user)
     experience = Experience.objects.filter(UserProfile=user)
     projects = Project.objects.filter(UserProfile=user)
+    skills = Skill.objects.filter(UserProfile=user)
 
     default_data['user_data'] = user
     default_data['education'] = education
     default_data['experience'] = experience
     default_data['projects'] = projects
+    default_data['skills'] = skills
 
     print(default_data['education'])
 
@@ -74,6 +77,17 @@ def login(request):
     master = Master.objects.get(Email = request.POST['email'], Password=request.POST['password'])
     user = UserProfile.objects.get(Master = master)
     request.session['email'] = master.Email
+
+    return redirect(profile_page)
+
+# photo upload
+def profile_photo_upload(request):
+    master = Master.objects.get(Email = request.session['email'])
+    user = UserProfile.objects.get(Master = master)
+
+    if 'profile_image' in request.FILES:
+        user.ProfileImage = request.FILES['profile_image']
+        user.save()
 
     return redirect(profile_page)
 
@@ -286,6 +300,24 @@ def change_password(request):
     else:
         print('your current password did not matched.')
 
+    return redirect(profile_page)
+
+# add skills
+def add_skills(request):
+    master = Master.objects.get(Email=request.session['email'])
+    user = UserProfile.objects.get(Master = master)
+
+    Skill.objects.create(
+        UserProfile = user,
+        Name = request.POST['skill_name'],
+        Level = request.POST['level']
+    )
+
+    return redirect(profile_page)
+
+# delete skill
+def delete_skill(request, id):
+    Skill.objects.get(id=id).delete()
     return redirect(profile_page)
 
 # logout

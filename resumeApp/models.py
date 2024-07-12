@@ -16,6 +16,7 @@ gender_choices = (
 )
 class UserProfile(models.Model):
     Master = models.ForeignKey(Master, on_delete=models.CASCADE)
+    ProfileImage = models.FileField(upload_to="profile_images/", default="avatar.png")
     FullName = models.CharField(max_length=100, blank=True, null=True, default='')
     Username = models.CharField(max_length=100, blank=True, unique=True)
     About = models.TextField(max_length=255, blank=True, null=True, default='')

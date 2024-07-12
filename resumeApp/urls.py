@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout/', logout, name="logout"),
     path('profile_update/', profile_update, name="profile_update"),
     path('change_password/', change_password, name="change_password"),
+    
     path('add_education/', add_education, name="add_education"),
     path('delete_education/<int:id>/', delete_education, name="delete_education"),
     path('edit_education/<int:id>/', edit_education, name="edit_education"),
@@ -28,4 +29,7 @@ urlpatterns = [
     path('edit_project_save/<int:id>/', edit_project_save, name="edit_project_save"),
     path('delete_project/<int:id>/', delete_project, name="delete_project"),
     path('edit_proj_cancel/', edit_proj_cancel, name="edit_proj_cancel"),
+    
+    path('add_skills/', add_skills, name="add_skills"),
+    path('delete_skill/<int:id>/', delete_skill, name="delete_skill"),
 ]

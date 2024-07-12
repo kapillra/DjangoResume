@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <form class="card-body" method="post" action="{% url 'add_skills' %}">
+                {% csrf_token %}
+                <h6 class="card-title mb-4">Add Skills</h6>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="skill_name" class="form-control" value="{{edit_proj_data.ProjectName}}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Level</label>
+                        <select class="form-select" name="level" aria-label="Default select example">
+                            <option selected disabled>select level</option>
+                            {% for level, skill in skill_level %}
+                            <option value="{{level}}">{{skill}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="">
+                    <button type="submit" class="btn btn-success btn-icon">
+                        <i class="bi bi-check-circle"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+        
+        <div class="card sticky-top mb-4 mb-md-0">
+            <h4 class="card-header">My Skills</h4>
+            <div class="card-body">
+                {% for sk in skills %}
+                <span class="skill-tag text-uppercase"> {{sk.Name}}<span class="level_progress bg-primary" style="width: {{sk.Level}}%"></span><a href="{% url 'delete_skill' id=sk.id %}" data-role="remove"></a></span>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+</div>

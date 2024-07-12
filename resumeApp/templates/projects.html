@@ -12,7 +12,7 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Company</label>
                         <select class="form-select" name="company" aria-label="Default select example">
-                            <option selected>select company</option>
+                            <option selected disabled>select company</option>
                             <option value="self">Self</option>
                             {% for exp in experience %}
                             <option value="{{exp.Company}}">{{exp.Company}}</option>
