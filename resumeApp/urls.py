@@ -10,6 +10,7 @@ urlpatterns = [
     path('login/', login, name="login"),
     path('logout/', logout, name="logout"),
     path('profile_update/', profile_update, name="profile_update"),
+    path('profile_photo_upload/', profile_photo_upload, name="profile_photo_upload"),
     path('change_password/', change_password, name="change_password"),
     
     path('add_education/', add_education, name="add_education"),
@@ -32,4 +33,7 @@ urlpatterns = [
     
     path('add_skills/', add_skills, name="add_skills"),
     path('delete_skill/<int:id>/', delete_skill, name="delete_skill"),
+
+    # resumen viewer url
+    path('resume_viewer_page/@<str:username>/', resume_viewer_page, name="resume_viewer_page"),
 ]

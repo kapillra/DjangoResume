@@ -694,6 +694,11 @@ padding: 0px 2px;
                 <div class="card-body">
                     <ul class="nav nav-pills flex-column gap-2" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
+                            <a class="nav-link" href="{% url 'resume_viewer_page' username=user_data.Username %}" target="_blank">
+                                <i class="bi bi-person me-2"></i> Preview
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
                                aria-controls="profile" aria-selected="true">
                                 <i class="bi bi-person me-2"></i> Profile
@@ -736,29 +741,35 @@ padding: 0px 2px;
         <div class="col-md-10">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column flex-md-row text-center text-md-start mb-3">
+                                    <figure class="me-4 flex-shrink-0">
+                                        <img width="100" class="rounded-pill"
+                                            src="{{user_data.ProfileImage.url}}" alt="...">
+                                    </figure>
+                                    <div class="flex-fill">
+                                        <h5 class="mb-3">{% if user_data.FullName %}{{user_data.FullName}}{% else %}Guest{% endif %}</h5>
+                                        <form method="post" action="{% url 'profile_photo_upload' %}" onchange="this.submit()" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <label class="btn btn-primary btn-sm me-2" for="profile_image">Change Avatar</label>
+                                            <input type="file" style="display: none;" name="profile_image" id="profile_image" />
+                                        </form>
+                                        
+                                        <button class="btn btn-outline-danger btn-sm btn-icon" data-bs-toggle="tooltip" title="Remove Avatar">
+                                            <i class="bi bi-trash me-0"></i>
+                                        </button>
+                                        <p class="small text-muted mt-3">For best results, use an image at least
+                                            256px by 256px in either .jpg or .png format</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <form method="post" action="{% url 'profile_update' %}">
                         {% csrf_token %}
                         <div class="mb-4">
-                            <div class="d-flex flex-column flex-md-row text-center text-md-start mb-3">
-                                <figure class="me-4 flex-shrink-0">
-                                    <img width="100" class="rounded-pill"
-                                        src="{{user_data.ProfileImage.url}}" alt="...">
-                                </figure>
-                                <div class="flex-fill">
-                                    <h5 class="mb-3">{% if user_data.FullName %}{{user_data.FullName}}{% else %}Guest{% endif %}</h5>
-                                    <form method="post" action="#" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <label class="btn btn-primary me-2" for="profile_image">Change Avatar</label>
-                                        <input type="file" style="display: none;" name="profile_image" id="profile_image" />
-                                    </form>
-                                    
-                                    <button class="btn btn-outline-danger btn-icon" data-bs-toggle="tooltip" title="Remove Avatar">
-                                        <i class="bi bi-trash me-0"></i>
-                                    </button>
-                                    <p class="small text-muted mt-3">For best results, use an image at least
-                                        256px by 256px in either .jpg or .png format</p>
-                                </div>
-                            </div>
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <h6 class="card-title mb-4">Basic Information</h6>

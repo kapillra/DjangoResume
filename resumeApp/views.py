@@ -9,6 +9,22 @@ default_data = {
     'skill_level': skill_level,
 }
 
+
+# resume viewer page
+def resume_viewer_page(request, username):
+    user = UserProfile.objects.get(Username=username)
+    education = Education.objects.filter(UserProfile=user)
+    experience = Experience.objects.filter(UserProfile=user)
+    projects = Project.objects.filter(UserProfile=user)
+    skills = Skill.objects.filter(UserProfile=user)
+    data = {}
+    data['user_data'] = user
+    data['education'] = education
+    data['experience'] = experience
+    data['projects'] = projects
+    data['skills'] = skills
+    return render(request, "resume_view_page/index.html", data)
+
 def login_page(request):
     if 'email' in request.session:
         return redirect(profile_page)

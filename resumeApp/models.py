@@ -87,3 +87,13 @@ class Skill(models.Model):
 
     class Meta:
         db_table = 'skill'
+
+social_sites = (
+    ('facebook', 'facebook'),
+    ('twitter', 'twitter'),
+    ('instagram', 'instagram')
+)
+class Social(models.Model):
+    UserProfile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    Name = models.CharField(max_length=100, choices=social_sites)
+    URL = models.URLField()
