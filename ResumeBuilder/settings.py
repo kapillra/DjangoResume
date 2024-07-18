@@ -78,6 +78,12 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "resume_app.db",
+        # "ENGINE": "django.db.backends.mysql",
+        # "HOST": "localhost",
+        # "NAME": "resume_db",
+        # "PORT": 3306,
+        # "USER": "root",
+        # "PASSWORD": "admin",
     }
 }
 

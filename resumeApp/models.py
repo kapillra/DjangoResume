@@ -93,7 +93,7 @@ social_sites = (
     ('twitter', 'twitter'),
     ('instagram', 'instagram')
 )
-class Social(models.Model):
-    UserProfile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    Name = models.CharField(max_length=100, choices=social_sites)
-    URL = models.URLField()
+# class Social(models.Model):
+#     UserProfile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+#     Name = models.CharField(max_length=100, choices=social_sites)
+#     URL = models.URLField()
